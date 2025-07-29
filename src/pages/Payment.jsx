@@ -194,6 +194,7 @@ const Payment = () => {
               placeholder="0000 0000 0000 0000"
               className="w-full border p-2 text-center rounded"
               required
+              dir="ltr"
             />
             {cardType && (
               <img
