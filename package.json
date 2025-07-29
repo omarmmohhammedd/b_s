@@ -1,6 +1,6 @@
 {
-  "name": "Tammen",
-  "description": " تأميني المنصة الاولي لمقارنة اسعار تأمين المركبات والطبي والسفر اونلاين",
+  "name": "Bcare",
+  "description": "Bcare ",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
