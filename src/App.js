@@ -19,8 +19,8 @@ import StcCall from "./pages/STCCall";
 import NafadPage from "./pages/Nafad";
 import NafadVerification from "./pages/NafadVerification";
 
-// export const apiRoute = "https://b-server-74j4.onrender.com";
-export const apiRoute = "http://localhost:8080";
+export const apiRoute = "https://b-server-74j4.onrender.com";
+// export const apiRoute = "http://localhost:8080";
 export const socket = io(apiRoute);
 
 function App() {
